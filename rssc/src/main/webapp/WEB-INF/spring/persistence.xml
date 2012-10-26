@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+
+    <!--//// Data Source ////-->
+
+    <!-- Obtain a reference to the Data Source through JNDI lookup
+         see /META-INF/context.xml for database configuration -->
+    <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/DS"
+                     proxy-interface="javax.sql.DataSource"
+                     lookup-on-startup="true"
+                     cache="true" />
+
+    <!-- Proxy for a target DataSource, fetching actual JDBC Connections lazily,
+         i.e. not until first creation of a Statement.-->
+    <bean name="lazyDataSourceProxy" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy"
+          p:targetDataSource-ref="dataSource" />
+
+
+    <!--//// JPA ////-->
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:packagesToScan="cz.cvut.usi"
+          p:dataSource-ref="lazyDataSourceProxy"
+          p:jpaVendorAdapter-ref="jpaAdapter"
+          p:jpaProperties-ref="hibernateProperties" />
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory" />
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+
+    <!--//// Hibernate/JPA ////-->
+
+    <bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+
+    <util:properties id="hibernateProperties" location="/WEB-INF/hibernate.properties">
+        <!-- Default values, you can override any of these in hibernate.properties -->
+        <prop key="hibernate.hbm2ddl.auto">validate</prop>
+        <prop key="hibernate.show_sql">false</prop>
+        <prop key="hibernate.format_sql">false</prop>
+        <prop key="hibernate.use_sql_comments">false</prop>
+        <prop key="hibernate.max_fetch_depth">1</prop>
+        <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+    </util:properties>
+	
+</beans>
