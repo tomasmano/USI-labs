@@ -13,11 +13,13 @@
 
         <h:form id="form">  
 
+            <p:growl id="messages" showDetail="true"/>  
+
+
             <p:dataTable var="res" value="#{reservationHome.reservations}" id="reservationsList" editable="true">  
 
-<!--                <f:facet name="header">  
-                    Vaše rezervace:
-                </f:facet>  -->
+                <p:ajax event="rowEdit" listener="#{reservationHome.onEdit}" update=":form:messages" />  
+                <p:ajax event="rowEditCancel" listener="#{reservationHome.onCancel}" update=":form:messages" />  
 
                 <p:column headerText="Číslo rezervace" style="width:125px">  
                     <p:cellEditor>  
@@ -33,14 +35,14 @@
                 <p:column headerText="Aktivita" style="width:125px">  
                     <p:cellEditor>  
                         <f:facet name="output">  
-                            <h:outputText value="#{res.description}" />  
+                            <h:outputText value="#{res.activity}" />  
                         </f:facet>  
                         <f:facet name="input">  
-                            <h:selectOneMenu value="#{res.description}" >  
-                                <f:selectItem itemLabel="Futbal" itemValue="futbal" />  
-                                <f:selectItem itemLabel="Hokej" itemValue="hokej" />  
-                                <f:selectItem itemLabel="Fitness" itemValue="fitness" />  
-                                <f:selectItem itemLabel="Sauna" itemValue="sauna" />  
+                            <h:selectOneMenu value="#{res.activity}" >  
+                                <f:selectItems value="#{reservationHome.reservationsActivities}"  
+                                               var="activity"   
+                                               itemLabel="#{activity}"  
+                                               itemValue="#{activity}" />  
                             </h:selectOneMenu>  
                         </f:facet>  
                     </p:cellEditor>  

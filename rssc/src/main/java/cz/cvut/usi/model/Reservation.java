@@ -1,16 +1,17 @@
 package cz.cvut.usi.model;
 
+import cz.cvut.usi.model.enums.ReservationActivity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Reservation implements Serializable {
@@ -20,8 +21,8 @@ public class Reservation implements Serializable {
     private Long id;
 
     @Column(length = 48)
-    @Size(max = 48) @NotNull
-    private String description;
+    @Enumerated(EnumType.STRING)
+    private ReservationActivity activity;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
@@ -34,12 +35,12 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public ReservationActivity getActivity() {
+        return activity;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setActivity(ReservationActivity activity) {
+        this.activity = activity;
     }
 
     public Date getTime() {
@@ -52,7 +53,7 @@ public class Reservation implements Serializable {
 
     @Override
     public String toString() {
-        return "Reservation{" + "id=" + id + ", description=" + description + ", time=" + time + '}';
+        return "Reservation{" + "id=" + id + ", description=" + activity + ", time=" + time + '}';
     }
     
 }

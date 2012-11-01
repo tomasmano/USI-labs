@@ -14,34 +14,26 @@
             <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
 
                 <h:outputText value="Zvolte aktivitu: " />  
-                <p:selectOneMenu value="#{reservationHome.reservation.description}">  
-                    <f:selectItem itemLabel="Futbal" itemValue="futbal" />  
-                    <f:selectItem itemLabel="Hokej" itemValue="hokej" />  
-                    <f:selectItem itemLabel="Fitness" itemValue="fitness" />  
-                    <f:selectItem itemLabel="Sauna" itemValue="sauna" />  
+                <p:selectOneMenu value="#{reservationHome.reservation.activity}">  
+                    <f:selectItems value="#{reservationHome.reservationsActivities}"  
+                            var="activity"   
+                            itemLabel="#{activity}"  
+                            itemValue="#{activity}" />  
                 </p:selectOneMenu>  
                 <h:outputText value="Zvolte čas: " />  
                 <p:calendar value="#{reservationHome.reservation.time}" pattern="MM/dd/yyyy HH:mm" />  
 
             </h:panelGrid>  
 
-            <p:commandButton value="Rezervovat" update="display" oncomplete="dlg.show()" action="#{reservationHome.saveReservation()}"/>  
+            <p:commandButton value="Rezervovat" update="display" oncomplete="dlg.show()" action="#{reservationHome.saveReservation}" />  
 
             <p:dialog header="Rezervace byla úspešná." modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlg">  
                 <h:panelGrid columns="1" id="display">  
-                    <h:outputText value="Detail reservace: #{reservationHome.reservation.description}" />  
+                    <h:outputText value="Detail reservace: #{reservationHome.reservation.activity}" />  
                 </h:panelGrid>  
             </p:dialog>  
 
         </h:form>  
-
-        <h:form>
-            <div style="border-top: 1px solid #d0d0d0; margin-top: 12px; padding-top: 12px">
-                <h:inputText value="#{reservationHome.reservation.description}" id="taskDesc" />
-                <h:commandButton action="#{reservationHome.saveReservation}" value="Add" />
-                <h:message for="taskDesc" style="color : red;padding-left : 8px" />
-            </div>
-        </h:form>
 
     </ui:define>
 </ui:composition>

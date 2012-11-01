@@ -22,6 +22,7 @@
         <navigation-case>
             <from-outcome>reservation</from-outcome>
             <to-view-id>/reservation.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -29,6 +30,7 @@
         <navigation-case>
             <from-outcome>details</from-outcome>
             <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
 
