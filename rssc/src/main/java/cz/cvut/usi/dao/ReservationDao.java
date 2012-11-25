@@ -14,8 +14,8 @@ public class ReservationDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void save(Reservation task) {
-        entityManager.persist(task);
+    public void save(Reservation reservation) {
+        entityManager.persist(reservation);
     }
 
     @SuppressWarnings("unchecked")

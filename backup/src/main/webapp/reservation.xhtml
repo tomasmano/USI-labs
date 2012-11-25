@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"  
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+        <h1><h:outputText value="Stránka reservací" /></h1>
+
+        <h:form>  
+
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
+
+                <h:outputText value="Zvolte aktivitu: " />  
+                <p:selectOneMenu value="#{reservationHome.reservation.activity}">  
+                    <f:selectItems value="#{reservationHome.reservationsActivities}"  
+                            var="activity"   
+                            itemLabel="#{activity}"  
+                            itemValue="#{activity}" />  
+                </p:selectOneMenu>  
+                <h:outputText value="Zvolte čas: " />  
+                <p:calendar value="#{reservationHome.reservation.time}" pattern="MM/dd/yyyy HH:mm" />  
+
+            </h:panelGrid>  
+
+            <p:commandButton value="Rezervovat" update="display" oncomplete="dlg.show()" action="#{reservationHome.saveReservation}" />  
+
+            <p:dialog header="Rezervace byla úspešná." modal="true" showEffect="fade" hideEffect="fade" widgetVar="dlg">  
+                <h:panelGrid columns="1" id="display">  
+                    <h:outputText value="Detail reservace: #{reservationHome.reservation.activity}" />  
+                </h:panelGrid>  
+            </p:dialog>  
+
+        </h:form>  
+
+    </ui:define>
+</ui:composition>

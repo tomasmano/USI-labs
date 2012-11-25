@@ -3,6 +3,7 @@ package cz.cvut.usi.view;
 import cz.cvut.usi.dao.ReservationDao;
 import cz.cvut.usi.model.Reservation;
 import cz.cvut.usi.model.enums.ReservationActivity;
+import cz.cvut.usi.service.ReservationService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Component;
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */
-//@Component("reservationHome")
 @Component
 public class ReservationHome {
 
@@ -35,8 +35,9 @@ public class ReservationHome {
             ReservationActivity.sauna
         };
     }
+    
     @Autowired
-    private ReservationDao reservationDao;
+    private ReservationService reservationService;
 
     public String getMessage() {
         LOG.debug("Returning message from task home bean");
@@ -52,14 +53,14 @@ public class ReservationHome {
     }
 
     public String saveReservation() {
-        reservationDao.save(reservation);
+        reservationService.saveReservation(reservation);
         reservation = new Reservation();
         invalidateReservations();
         return null;
     }
 
     public void saveReservationPrimefacesWay(ActionEvent actionEvent) {
-        reservationDao.save(reservation);
+        reservationService.saveReservation(reservation);
         reservation = new Reservation();
         invalidateReservations();
     }
@@ -70,7 +71,7 @@ public class ReservationHome {
 
     public List<Reservation> getReservations() {
         if (reservations == null) {
-            reservations = reservationDao.list();
+            reservations = reservationService.list();
         }
         return reservations;
 
