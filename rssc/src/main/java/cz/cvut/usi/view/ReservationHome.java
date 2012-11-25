@@ -1,10 +1,8 @@
 package cz.cvut.usi.view;
 
-import cz.cvut.usi.dao.ReservationDao;
 import cz.cvut.usi.model.Reservation;
 import cz.cvut.usi.model.enums.ReservationActivity;
 import cz.cvut.usi.service.ReservationService;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

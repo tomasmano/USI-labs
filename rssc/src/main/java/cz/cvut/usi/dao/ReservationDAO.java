@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class ReservationDao {
+public class ReservationDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
