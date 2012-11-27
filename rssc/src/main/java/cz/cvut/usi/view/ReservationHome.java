@@ -2,6 +2,7 @@ package cz.cvut.usi.view;
 
 import cz.cvut.usi.model.Reservation;
 import cz.cvut.usi.model.enums.ReservationActivity;
+import cz.cvut.usi.model.enums.ReservationTool;
 import cz.cvut.usi.service.ReservationService;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -23,14 +24,20 @@ public class ReservationHome {
     private static final Logger LOG = LoggerFactory.getLogger(ReservationHome.class);
     private Reservation reservation = new Reservation();
     private List<Reservation> reservations;
-    private static final ReservationActivity[] reservationsActivities;
+    private static final String[] reservationsActivities;
+    private static final String[] reservationsTools;
 
     static {
-        reservationsActivities = new ReservationActivity[]{
-            ReservationActivity.hokej,
-            ReservationActivity.futbal,
-            ReservationActivity.fitness,
-            ReservationActivity.sauna
+        reservationsActivities = new String[]{
+            ReservationActivity.hokej.toString(),
+            ReservationActivity.futbal.toString(),
+            ReservationActivity.fitness.toString(),
+            ReservationActivity.sauna.toString()
+        };
+        reservationsTools = new String[]{
+            ReservationTool.hokejka.toString(),
+            ReservationTool.lopta.toString(),
+            ReservationTool.tenisova_raketa.toString()
         };
     }
     
@@ -46,11 +53,16 @@ public class ReservationHome {
         return reservation;
     }
 
-    public ReservationActivity[] getReservationsActivities() {
+    public String[] getReservationsActivities() {
         return reservationsActivities;
     }
 
+    public String[] getReservationsTools() {
+        return reservationsTools;
+    }
+
     public String saveReservation() {
+        System.out.println(">>>>>>>> Save called.. res: "+reservation);
         reservationService.saveReservation(reservation);
         reservation = new Reservation();
         invalidateReservations();
@@ -64,10 +76,13 @@ public class ReservationHome {
     }
 
     private void invalidateReservations() {
+        System.out.println(">>>>>> invalidateReservations called");
         reservations = null;
     }
 
     public List<Reservation> getReservations() {
+        System.out.println(">>>>>>>>>> getReservation called....");
+        System.out.println(">>>>>>"+ reservationService);
         if (reservations == null) {
             reservations = reservationService.list();
         }

@@ -1,9 +1,11 @@
 package cz.cvut.usi.model;
 
 import cz.cvut.usi.model.enums.ReservationActivity;
+import cz.cvut.usi.model.enums.ReservationType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,8 +23,8 @@ public class Reservation implements Serializable {
     private Long id;
 
     @Column(length = 48)
-    @Enumerated(EnumType.STRING)
-    private ReservationActivity activity;
+//    @Enumerated(EnumType.STRING)
+    private String activity;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
@@ -35,11 +37,11 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public ReservationActivity getActivity() {
+    public String getActivity() {
         return activity;
     }
 
-    public void setActivity(ReservationActivity activity) {
+    public void setActivity(String activity) {
         this.activity = activity;
     }
 

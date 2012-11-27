@@ -54,6 +54,8 @@ body {
 }
 
 #content {
+    margin-bottom: 25px;
+    float: left;
     min-height: 320px;
     font-size: 120%;
     width: 720px;

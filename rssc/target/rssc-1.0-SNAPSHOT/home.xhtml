@@ -9,6 +9,39 @@
     <ui:define name="content">
         <h1><h:outputText value="Vítejte" /></h1>
 
+        <h2>Vaše osobní údaje:</h2>
+
+        <h:form prependId="false">  
+
+            <p:growl id="msgs" />  
+
+            <p:panel header="Uživatel">  
+
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="2">  
+
+                    <h:outputText value="Jméno: " />  
+                    <h:outputText value="#{userHome.user.firstName}" /> 
+
+                    <h:outputText value="Příjmení: " />  
+                    <h:outputText value="#{userHome.user.lastName}" />  
+
+                    <h:outputText value="Email: * " />  
+                    <p:inplace id="ajaxInplaceEmail" editor="true">  
+                        <p:inputText value="#{userHome.email}"  
+                                     required="true" label="text"/>  
+                    </p:inplace>  
+
+                    <h:outputText value="Login: *" />  
+                    <p:inplace id="ajaxInplaceLogin" editor="true">  
+                        <p:inputText value="#{userHome.login}"  
+                                     required="true" label="text"/>  
+                    </p:inplace>  
+
+                </h:panelGrid>  
+            </p:panel>  
+
+        </h:form>  
+
         <h2>Vaše rezervace:</h2>
 
         <h:form id="form">  

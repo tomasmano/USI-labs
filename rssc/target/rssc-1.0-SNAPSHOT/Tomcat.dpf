@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/rssc">
-  <Resource auth="Container" driverClassName="org.postgresql.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="3" logAbandoned="true" maxActive="20" maxIdle="5" minEvictableIdleTimeMillis="30000" minIdle="2" name="jdbc/DS" password="dev" removeAbandoned="true" removeAbandonedTimeout="60" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/rsscdb" username="dev"/>
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="3" logAbandoned="true" maxActive="20" maxIdle="5" minEvictableIdleTimeMillis="30000" minIdle="2" name="jdbc/DS" password="dev" removeAbandoned="true" removeAbandonedTimeout="60" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/rssc_db" username="dev"/>
   <ResourceLink global="jsf/ProjectStage" name="jsf/ProjectStage" type="java.lang.String"/>
 </Context>

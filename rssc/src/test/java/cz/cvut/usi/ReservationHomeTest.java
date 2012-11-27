@@ -28,7 +28,7 @@ public class ReservationHomeTest {
     @Test
     public void shouldSaveTaskAndResetTaskInstanceOnBean() {
         Reservation oldTask = reservationHome.getReservation();
-        reservationHome.getReservation().setActivity(ReservationActivity.fitness);
+        reservationHome.getReservation().setActivity(ReservationActivity.fitness.toString());
         reservationHome.saveReservation();
         Assert.assertNotNull("Saved reservation ID is null,probably not saved", oldTask.getId());
         Assert.assertNull("Reservation has not been reset", reservationHome.getReservation().getActivity());
