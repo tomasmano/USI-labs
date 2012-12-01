@@ -23,16 +23,13 @@
 
                     <h:outputText value="Jméno: *" />  
                     <p:inplace id="ajaxInplaceFirstName" editor="true">  
-                        <h:inputText value="#{authenticationBean.firstName}" required="true" label="text2"/>  
+                        <p:inputText value="#{authenticationBean.firstName}" required="true" label="text3"/>  
                     </p:inplace>  
 
                     <h:outputText value="Příjmení: *" />  
-                    <p:inplace id="ajaxInplaceFirstName" editor="true">  
-                        <h:inputText value="#{authenticationBean.lastName}" required="true" label="text2"/>  
+                    <p:inplace id="ajaxInplaceLastName" editor="true">  
+                        <p:inputText value="#{authenticationBean.lastName}" required="true" label="text2"/>  
                     </p:inplace>  
-
-                    <h:outputText value="Příjmení: *" />  
-                    <h:outputText value="#{authenticationBean.user.lastName}" />  
 
                     <h:outputText value="Email: * " />  
                     <p:inplace id="ajaxInplaceEmail" editor="true">  
