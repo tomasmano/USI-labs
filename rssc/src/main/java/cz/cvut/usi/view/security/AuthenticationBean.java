@@ -29,16 +29,15 @@ public class AuthenticationBean {
     @Autowired
     @Qualifier("authenticationManager")
     protected AuthenticationManager authenticationManager;
-    
     @Autowired
     @Qualifier("userDetailsService")
     private UserService userService;
-    
     User user = new User();
-
     private String password;
     private String email;
     private String login;
+    private String firstName;
+    private String lastName;
 
     public AuthenticationBean() {
     }
@@ -60,7 +59,9 @@ public class AuthenticationBean {
     }
 
     public String getEmail() {
-        this.email = user.getEmail();
+        if (user.getId() != null) {
+            this.email = userService.findById(user.getId()).getEmail();
+        }
         return email;
     }
 
@@ -74,8 +75,31 @@ public class AuthenticationBean {
     }
 
     public void setLogin(String login) {
-//        userService.updateProperty(user.getId(), "login", login);
         this.login = login;
+    }
+
+    public String getFirstName() {
+        if (user.getId() != null) {
+            this.firstName = userService.findById(user.getId()).getFirstName();
+        }
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        userService.updateProperty(user.getId(), "firstname", firstName);
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        if (user.getId() != null) {
+            this.lastName = userService.findById(user.getId()).getLastName();
+        }
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        userService.updateProperty(user.getId(), "lastname", lastName);
+        this.lastName = lastName;
     }
 
     /**
@@ -140,6 +164,4 @@ public class AuthenticationBean {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-    
-    
 }

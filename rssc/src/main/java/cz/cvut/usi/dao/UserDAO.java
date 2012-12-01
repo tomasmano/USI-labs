@@ -38,6 +38,10 @@ public class UserDAO {
     public boolean login(String login, String password) {
         throw new UnsupportedOperationException();
     }
+    
+    public User findById(Long id){
+        return em.find(User.class, id);
+    }
 
     public User findByLogin(String login) {
         List<User> result = null;

@@ -17,6 +17,8 @@ public interface UserService extends UserDetailsService{
 
     public boolean updateProperty(Long id, String property, Object value);
 
+    public User findById(Long id);
+    
     public User findByLogin(String login);
 
     @Override

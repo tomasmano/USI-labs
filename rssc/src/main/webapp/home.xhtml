@@ -21,10 +21,17 @@
 
                 <h:panelGrid columns="2" columnClasses="column" cellpadding="2">  
 
-                    <h:outputText value="Jméno: " />  
-                    <h:outputText value="#{authenticationBean.user.firstName}" /> 
+                    <h:outputText value="Jméno: *" />  
+                    <p:inplace id="ajaxInplaceFirstName" editor="true">  
+                        <h:inputText value="#{authenticationBean.firstName}" required="true" label="text2"/>  
+                    </p:inplace>  
 
-                    <h:outputText value="Příjmení: " />  
+                    <h:outputText value="Příjmení: *" />  
+                    <p:inplace id="ajaxInplaceFirstName" editor="true">  
+                        <h:inputText value="#{authenticationBean.lastName}" required="true" label="text2"/>  
+                    </p:inplace>  
+
+                    <h:outputText value="Příjmení: *" />  
                     <h:outputText value="#{authenticationBean.user.lastName}" />  
 
                     <h:outputText value="Email: * " />  
@@ -34,10 +41,8 @@
                         </p:inputText>
                     </p:inplace>  
 
-                    <h:outputText value="Login: *" />  
-                    <p:inplace id="ajaxInplaceLogin" editor="true">  
-                        <p:inputText value="#{authenticationBean.user.login}" required="true" label="text2"/>  
-                    </p:inplace>  
+                    <h:outputText value="Login: " />  
+                    <h:outputText value="#{authenticationBean.user.login}" />  
 
                     <p:message for="email-input" display="icon"/>
                 </h:panelGrid>  
