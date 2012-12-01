@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"  
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+        <h:form>  
+            <p:growl id="growl" showDetail="true" sticky="true" />  
+
+            <p:panel id="form-panel" header="Příhlášení" style="margin-bottom:10px;">  
+
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <h:outputLabel for="username" value="Login:" />  
+                    <p:inputText value="#{authenticationBean.login}"   
+                                 id="username" required="true" label="username" />  
+
+                    <h:outputLabel for="password" value="Heslo:" />  
+                    <h:inputSecret value="#{authenticationBean.password}"   
+                                   id="password" required="true" label="password" />  
+
+                    <p:commandButton id="loginButton" value="Příhlásit" update="growl"   
+                                     action="#{authenticationBean.doLogin}"   
+                                     />  
+                </h:panelGrid>  
+            </p:panel>  
+        </h:form>  
+    </ui:define>
+</ui:composition>

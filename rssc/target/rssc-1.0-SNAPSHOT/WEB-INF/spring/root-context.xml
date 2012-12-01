@@ -11,7 +11,10 @@
 
     <context:annotation-config />
     <context:component-scan base-package="cz.cvut.usi" />
+    
+    <bean id="userService" class="cz.cvut.usi.service.UserServiceImpl"/>
 
     <import resource="persistence.xml" />
+    <import resource="security.xml" />
 
 </beans>

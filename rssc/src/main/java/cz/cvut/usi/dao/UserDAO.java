@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 @Repository
-@Transactional(propagation= Propagation.MANDATORY)
+@Transactional(propagation = Propagation.MANDATORY)
 public class UserDAO {
 
     @PersistenceContext
@@ -33,5 +33,15 @@ public class UserDAO {
         String queryString = "UPDATE " + clazz.getSimpleName() + " AS e SET e." + property + "=:value WHERE e.id=" + id;
         int result = em.createQuery(queryString).setParameter("value", value).executeUpdate();
         return result == 0 ? false : true;
+    }
+
+    public boolean login(String login, String password) {
+        throw new UnsupportedOperationException();
+    }
+
+    public User findByLogin(String login) {
+        List<User> result = null;
+        result = em.createQuery("SELECT u from User u WHERE u.login=:param").setParameter("param", login).getResultList();
+        return result.isEmpty() ? null : (User) result.get(0);
     }
 }

@@ -53,6 +53,11 @@
         <param-value>/WEB-INF/spring/root-context.xml</param-value>
     </context-param>
     
+<!--    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>-->
+    
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
@@ -75,7 +80,21 @@
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
-
+    
+    <!--//// Filters ////-->
+    
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+<!--        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>-->
+    </filter-mapping>
 
     <!--//// Servlets ////-->
 

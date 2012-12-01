@@ -5,16 +5,9 @@ import cz.cvut.usi.model.Reservation;
 import cz.cvut.usi.model.enums.ReservationActivity;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-@ContextConfiguration("/context-test.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
-@Transactional
-public class ReservationHomeTest {
+public class ReservationHomeTest extends AbstractServiceTest{
 
     @Autowired
     private ReservationHome reservationHome;

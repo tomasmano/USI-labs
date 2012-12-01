@@ -1,7 +1,7 @@
 package cz.cvut.usi.view;
 
 import cz.cvut.usi.model.User;
-import cz.cvut.usi.service.UserService;
+import cz.cvut.usi.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */
-@Component
+//@Component
 public class UserHome {
 
     private User user;
-    @Autowired
-    private UserService userService;
+//    @Autowired
+    private UserServiceImpl userService;
     
     private String email;
     private String login;
@@ -61,6 +61,14 @@ public class UserHome {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public UserServiceImpl getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
 }
