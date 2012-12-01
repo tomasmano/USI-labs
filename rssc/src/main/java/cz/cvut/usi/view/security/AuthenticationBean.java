@@ -36,20 +36,11 @@ public class AuthenticationBean {
     
     User user = new User();
 
-    private String username;
     private String password;
     private String email;
     private String login;
 
     public AuthenticationBean() {
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public void setPassword(String password) {
@@ -69,11 +60,13 @@ public class AuthenticationBean {
     }
 
     public String getEmail() {
+        this.email = user.getEmail();
         return email;
     }
 
     public void setEmail(String email) {
         userService.updateProperty(user.getId(), "email", email);
+        this.email = email;
     }
 
     public String getLogin() {
@@ -81,7 +74,8 @@ public class AuthenticationBean {
     }
 
     public void setLogin(String login) {
-        userService.updateProperty(user.getId(), "login", login);
+//        userService.updateProperty(user.getId(), "login", login);
+        this.login = login;
     }
 
     /**
@@ -94,7 +88,9 @@ public class AuthenticationBean {
 
 
             Authentication request = new UsernamePasswordAuthenticationToken(
-                    this.username, this.password);
+                    this.login, this.password);
+//            System.out.println(">>>>>>>>>>>>>"+login+password);
+//            System.out.println(">>>>>>>>>>>>>"+request);
             Authentication result = authenticationManager.authenticate(request);
 
             SecurityContextHolder.getContext().setAuthentication(result);
@@ -108,7 +104,7 @@ public class AuthenticationBean {
             return null;
         }
 
-        user = userService.findByLogin(username);
+        user = userService.findByLogin(login);
 
         ExternalContext context = FacesContext.getCurrentInstance()
                 .getExternalContext();
@@ -127,7 +123,7 @@ public class AuthenticationBean {
     }
 
     public String logout() throws IOException {
-        this.username = "";
+        this.login = "";
         this.password = "";
         ExternalContext context = FacesContext.getCurrentInstance()
                 .getExternalContext();

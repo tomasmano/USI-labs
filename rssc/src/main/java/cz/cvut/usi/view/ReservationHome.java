@@ -62,7 +62,6 @@ public class ReservationHome {
     }
 
     public String saveReservation() {
-        System.out.println(">>>>>>>> Save called.. res: "+reservation);
         reservationService.saveReservation(reservation);
         reservation = new Reservation();
         invalidateReservations();
@@ -76,13 +75,10 @@ public class ReservationHome {
     }
 
     private void invalidateReservations() {
-        System.out.println(">>>>>> invalidateReservations called");
         reservations = null;
     }
 
     public List<Reservation> getReservations() {
-        System.out.println(">>>>>>>>>> getReservation called....");
-        System.out.println(">>>>>>"+ reservationService);
         if (reservations == null) {
             reservations = reservationService.list();
         }

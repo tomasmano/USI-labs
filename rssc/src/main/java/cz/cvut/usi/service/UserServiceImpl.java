@@ -27,22 +27,23 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserDAO userDAO;
 
+    @Override
     public void save(User user) {
         userDAO.save(user);
     }
 
+    @Override
     public List<User> list() {
         return userDAO.list();
     }
 
+    @Override
     public boolean updateProperty(Long id, String property, Object value) {
+        System.out.println(">>>>>>>>> updateProperty called..  "+id+" "+property+" "+value);
         return userDAO.updateSimplePropertyByValue(id, property, value, User.class);
     }
 
-    public boolean login(String login, String password) {
-        return userDAO.login(login, password);
-    }
-
+    @Override
     public User findByLogin(String login) {
         return userDAO.findByLogin(login);
     }
@@ -64,6 +65,8 @@ public class UserServiceImpl implements UserService{
         org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(),
                 user.isActive(), user.isActive(), user.isActive(),
                 user.isActive(), authorities);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(userDetails);
         return userDetails;
     }
 }
