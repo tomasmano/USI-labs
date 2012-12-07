@@ -7,9 +7,9 @@
     <h:head>
         <title>Reservační systém sportovního centra</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <h:outputStylesheet name="css/screen.css" />
+        <h:outputStylesheet library="default" name="css/screen.css" />
     </h:head>
-    
+
     <h:body>
         <h:panelGroup id="page" layout="block">
             <h:panelGroup id="header" layout="block">
@@ -17,14 +17,23 @@
             </h:panelGroup>
             <h:panelGroup id="container" layout="block">
                 <h:panelGroup id="sidebar" layout="block">
-                    <h1>Menu</h1>
-                    <h:form>  
-                        <p:menu>  
+                    <h:form rendered="#{authenticationBean.loggedIn == true}">  
+                        <h1>Menu</h1>
+                        <p:menu rendered='#{authenticationBean.isAdmin == false}'>  
                             <p:menuitem value="Můj účet" url="home.xhtml"
                                         icon="ui-icon-plusthick"/>  
                             <p:menuitem value="Nová rezervace" url="reservation.xhtml"
                                         icon="ui-icon-plusthick"/>  
                         </p:menu>  
+                        <p:menu rendered='#{authenticationBean.isAdmin == true}'>  
+                            <p:menuitem value="Přidat uživatele" url="/admin/create-user.xhtml"
+                                        icon="ui-icon-plusthick"/>  
+                            <p:menuitem value="Prohlížet uživatele" url="/admin/home.xhtml"
+                                        icon="ui-icon-plusthick"/>  
+                        </p:menu>  
+                        <p:spacer width="30"/>
+                        <p:commandButton value="Logout"
+                                         action="#{authenticationBean.logout}" />
                     </h:form>  
                 </h:panelGroup>
                 <h:panelGroup id="content" layout="block">

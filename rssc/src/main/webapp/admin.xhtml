@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"  
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+
+        <h1><h:outputText value="Vítejte" /></h1>
+
+        <h2>Vaše osobní údaje:</h2>
+
+        <h:form prependId="false">  
+
+            <p:growl id="msgs" />  
+
+            <p:panel header="Uživatel">  
+
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="2">  
+
+                    <h:outputText value="Jméno: *" />  
+                    <p:inplace id="ajaxInplaceFirstName" editor="true">  
+                        <p:inputText value="#{authenticationBean.firstName}" required="true" label="text3"/>  
+                    </p:inplace>  
+
+                    <h:outputText value="Příjmení: *" />  
+                    <p:inplace id="ajaxInplaceLastName" editor="true">  
+                        <p:inputText value="#{authenticationBean.lastName}" required="true" label="text2"/>  
+                    </p:inplace>  
+
+                    <h:outputText value="Email: * " />  
+                    <p:inplace id="ajaxInplaceEmail" editor="true">  
+                        <p:inputText id="email-input" value="#{authenticationBean.email}" required="true" label="text1">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
+                    </p:inplace>  
+
+                    <h:outputText value="Login: " />  
+                    <h:outputText value="#{authenticationBean.user.login}" />  
+
+                    <p:message for="email-input" display="icon"/>
+                </h:panelGrid>  
+            </p:panel>  
+
+        </h:form>  
+
+        <h2>Vaše rezervace:</h2>
+
+        <h:form id="form">  
+
+            <p:growl id="messages" showDetail="true"/>  
+
+
+            <p:dataTable var="res" value="#{reservationHome.reservations}" id="reservationsList" editable="true">  
+
+                <p:ajax event="rowEdit" listener="#{reservationHome.onEdit}" update=":form:messages" />  
+                <p:ajax event="rowEditCancel" listener="#{reservationHome.onCancel}" update=":form:messages" />  
+
+                <p:column headerText="Číslo rezervace" style="width:125px">  
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{res.id}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{res.id}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>  
+
+                <p:column headerText="Aktivita" style="width:125px">  
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{res.activity}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <h:selectOneMenu value="#{res.activity}" >  
+                                <f:selectItems value="#{reservationHome.reservationsActivities}"  
+                                               var="activity"   
+                                               itemLabel="#{activity}"  
+                                               itemValue="#{activity}" />  
+                            </h:selectOneMenu>  
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>  
+
+                <p:column headerText="Čas" style="width:125px">  
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{res.time}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:calendar value="#{reservationHome.reservation.time}" pattern="MM/dd/yyyy HH:mm" />  
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>  
+
+                <p:column headerText="Options" style="width:50px">  
+                    <p:rowEditor />  
+                </p:column>  
+
+            </p:dataTable>  
+
+        </h:form> 
+
+    </ui:define>
+</ui:composition>

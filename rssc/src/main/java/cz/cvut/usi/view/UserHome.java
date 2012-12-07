@@ -1,60 +1,35 @@
 package cz.cvut.usi.view;
 
 import cz.cvut.usi.model.User;
+import cz.cvut.usi.service.SecurityRoleService;
+import cz.cvut.usi.service.UserService;
 import cz.cvut.usi.service.UserServiceImpl;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */
-//@Component
+@Component
+@Scope(value="request")
 public class UserHome {
 
-    private User user;
-//    @Autowired
-    private UserServiceImpl userService;
+    private User user = new User();
+   
+    @Autowired
+    @Qualifier("userDetailsService")
+    private UserService userService;
     
-    private String email;
-    private String login;
-    
+    @Autowired
+    private SecurityRoleService securityRoleService;
 
     public UserHome() {
-        user = loadUser();
-    }
-//
-//    private void init() {
-//        if (userService.list()==null || userService.list().isEmpty()) {
-//            User sample = new User("tomas", "tomy@cvut.cz", "Tomas", "Mano");
-//            userService.save(sample);
-//        }
-//    }
-
-    private User loadUser() {
-        return new User("tomas", "tomy@cvut.cz", "Tomas", "Mano");
-    }
-
-    public String getEmail() {
-        email = user.getEmail();
-        return email;
-    }
-
-    public String getLogin() {
-        login = user.getLogin();
-        return login;
     }
     
-    public void setEmail(String email){
-        user.setEmail(email);
-//        userService.updateProperty(user.getId(), "email", email);
-    }
-    
-    public void setLogin(String login){
-        user.setLogin(login);
-//        userService.updateProperty(user.getId(), "login", login);
-    }
-
     public User getUser() {
         return user;
     }
@@ -63,12 +38,25 @@ public class UserHome {
         this.user = user;
     }
 
-    public UserServiceImpl getUserService() {
+    public UserService getUserService() {
         return userService;
     }
 
-    public void setUserService(UserServiceImpl userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
+    
+    public String saveUser(){
+        userService.save(user);
+        invalidate();
+        return "saved";
+    }
 
+    private void invalidate(){
+        user = new User();
+    }
+
+    public List<User> list() {
+        return userService.list();
+    }
 }

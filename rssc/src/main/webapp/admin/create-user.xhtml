@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"  
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+        <h1><h:outputText value="Vítejte" /></h1>
+
+        <h2>Přidat uživatele: </h2>
+
+        <h:form id="form">  
+
+            <p:panel id="panel" header="Nový uživatel">  
+
+                <p:messages id="msgs"/>  
+
+                <h:panelGrid columns="3">  
+                    <h:outputLabel for="firstname" value="Jméno: *" />  
+                    <p:inputText id="firstname" value="#{userHome.user.firstName}" required="true" label="Firstname">  
+                        <f:validateLength minimum="4" />  
+                    </p:inputText>  
+                    <p:message for="firstname" display="icon"/>  
+
+                    <h:outputLabel for="surname" value="Přímení: *" />  
+                    <p:inputText id="surname" value="#{userHome.user.lastName}" label="Surname" required="true">  
+                        <f:validateLength minimum="4" />  
+                    </p:inputText>  
+                    <p:message for="surname" display="icon"/>  
+
+                    <h:outputLabel for="email" value="Email: *" />  
+                    <p:inputText id="email" value="#{userHome.user.email}" label="Email" required="true">  
+                        <f:validateLength minimum="4" />  
+                    </p:inputText>  
+                    <p:message for="email" display="icon"/>  
+
+                    <h:outputLabel for="login" value="Login: *" />  
+                    <p:inputText id="login" value="#{userHome.user.login}" label="Login" required="true">  
+                        <f:validateLength minimum="4" />  
+                    </p:inputText>  
+                    <p:message for="login" display="icon"/>  
+
+                    <h:outputLabel for="password" value="Password: *" />  
+                    <p:inputText id="password" value="#{userHome.user.password}" label="Password" required="true">  
+                        <f:validateLength minimum="4" />  
+                    </p:inputText>  
+                    <p:message for="password" display="icon"/>  
+
+                </h:panelGrid>  
+
+                <p:commandButton id="btn" value="Uložit" update="panel" action="#{userHome.saveUser()}"/>  
+            </p:panel>  
+
+        </h:form>  
+
+    </ui:define>
+</ui:composition>

@@ -1,5 +1,6 @@
 package cz.cvut.usi.service;
 
+import cz.cvut.usi.dao.SecurityRoleDAO;
 import cz.cvut.usi.dao.UserDAO;
 import cz.cvut.usi.model.SecurityRole;
 import cz.cvut.usi.model.User;
@@ -11,7 +12,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +26,14 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserDAO userDAO;
+    
+    @Autowired
+    SecurityRoleDAO securityRoleDAO;
 
     @Override
     public void save(User user) {
         userDAO.save(user);
+        securityRoleDAO.saveUserRole(user);
     }
 
     @Override
@@ -39,7 +43,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean updateProperty(Long id, String property, Object value) {
-        System.out.println(">>>>>>>>> updateProperty called..  "+id+" "+property+" "+value);
         return userDAO.updateSimplePropertyByValue(id, property, value, User.class);
     }
 
@@ -70,8 +73,6 @@ public class UserServiceImpl implements UserService{
         org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(),
                 user.isActive(), user.isActive(), user.isActive(),
                 user.isActive(), authorities);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(userDetails);
         return userDetails;
     }
 }

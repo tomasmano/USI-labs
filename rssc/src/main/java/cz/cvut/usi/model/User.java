@@ -2,6 +2,7 @@ package cz.cvut.usi.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,9 +29,10 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String password;
+    private Boolean enabled = true;
     
-    @Column(nullable = false)
-    private Boolean active;
+    @Column
+    private Boolean active = true;
     
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<SecurityRole> roles;
@@ -43,6 +45,13 @@ public class User implements Serializable {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+    
+    public void addRole(SecurityRole role){
+        if (roles == null) {
+            roles = new HashSet<SecurityRole>();
+        }
+        roles.add(role);
     }
 
     public Long getId() {
@@ -103,6 +112,14 @@ public class User implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Collection<SecurityRole> getRoles() {

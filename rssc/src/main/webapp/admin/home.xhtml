@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"  
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+        <h1><h:outputText value="Vítejte" /></h1>
+
+        <h2>Uživatelé RSSC:</h2>
+            
+          <h:form id="form">  
+
+            <p:dataTable var="u" value="#{userHome.list()}" id="usersList">  
+
+                <p:column headerText="Číslo uživatele" style="width:125px">  
+                    <h:outputText value="#{u.id}" />  
+                </p:column>  
+
+                <p:column headerText="Jméno" style="width:125px">  
+                    <h:outputText value="#{u.firstName}" /> 
+                </p:column>  
+
+                <p:column headerText="Přímení" style="width:125px">  
+                    <h:outputText value="#{u.lastName}" /> 
+                </p:column>  
+
+                <p:column headerText="Email" style="width:125px">  
+                    <h:outputText value="#{u.email}" /> 
+                </p:column>  
+                
+                <p:column headerText="Login" style="width:125px">  
+                    <h:outputText value="#{u.login}" /> 
+                </p:column>  
+
+            </p:dataTable>  
+
+        </h:form> 
+
+    </ui:define>
+</ui:composition>

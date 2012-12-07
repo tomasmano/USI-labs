@@ -18,25 +18,32 @@
     </application>
     
     <navigation-rule>
-        <from-view-id>/home.xhtml</from-view-id>
+        <from-view-id>/admin/admin-login.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>reservation</from-outcome>
-            <to-view-id>/reservation.xhtml</to-view-id>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/home.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/reservation.xhtml</from-view-id>
+        <from-view-id>/admin/create-user.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>details</from-outcome>
+            <from-outcome>saved</from-outcome>
+            <to-view-id>/admin/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
             <to-view-id>/home.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>success</from-outcome>
+            <from-outcome>logout</from-outcome>
             <to-view-id>/home.xhtml</to-view-id>
             <redirect/>
         </navigation-case>

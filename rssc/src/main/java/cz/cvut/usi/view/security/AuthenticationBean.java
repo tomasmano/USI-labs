@@ -2,15 +2,14 @@ package cz.cvut.usi.view.security;
 
 import cz.cvut.usi.model.User;
 import cz.cvut.usi.service.UserService;
-import cz.cvut.usi.service.UserServiceImpl;
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,9 +17,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,6 +36,8 @@ public class AuthenticationBean {
     private String login;
     private String firstName;
     private String lastName;
+    private boolean loggedIn = false;
+    private boolean isAdmin = false;
 
     public AuthenticationBean() {
     }
@@ -113,11 +113,14 @@ public class AuthenticationBean {
 
             Authentication request = new UsernamePasswordAuthenticationToken(
                     this.login, this.password);
-//            System.out.println(">>>>>>>>>>>>>"+login+password);
-//            System.out.println(">>>>>>>>>>>>>"+request);
             Authentication result = authenticationManager.authenticate(request);
 
             SecurityContextHolder.getContext().setAuthentication(result);
+
+            Collection<String> roles = AuthorityUtils.authorityListToSet(result.getAuthorities());
+            if (roles.contains("ROLE_ADMIN")) {
+                isAdmin = true;
+            }
 
         } catch (AuthenticationException e) {
 
@@ -129,26 +132,30 @@ public class AuthenticationBean {
         }
 
         user = userService.findByLogin(login);
+        loggedIn = true;
 
-        ExternalContext context = FacesContext.getCurrentInstance()
-                .getExternalContext();
+//        ExternalContext context = FacesContext.getCurrentInstance()
+//                .getExternalContext();
+//
+//        HttpServletRequest request = (HttpServletRequest) context.getRequest();
+//        HttpServletResponse response = (HttpServletResponse) context.getResponse();
+//
+//        SavedRequest savedRequest =
+//                new HttpSessionRequestCache().getRequest(request, response);
+//
+//        context.redirect(savedRequest.getRedirectUrl());
+//
+//        FacesContext.getCurrentInstance().responseComplete();
 
-        HttpServletRequest request = (HttpServletRequest) context.getRequest();
-        HttpServletResponse response = (HttpServletResponse) context.getResponse();
-
-        SavedRequest savedRequest =
-                new HttpSessionRequestCache().getRequest(request, response);
-
-        context.redirect(savedRequest.getRedirectUrl());
-
-        FacesContext.getCurrentInstance().responseComplete();
-
-        return null;
+        return "success";
     }
 
     public String logout() throws IOException {
         this.login = "";
         this.password = "";
+        this.loggedIn = false;
+        this.isAdmin = false;
+        ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
         ExternalContext context = FacesContext.getCurrentInstance()
                 .getExternalContext();
         context.redirect(context.getRequestContextPath()
@@ -164,4 +171,21 @@ public class AuthenticationBean {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+    
 }
